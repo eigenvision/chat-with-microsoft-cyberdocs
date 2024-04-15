@@ -23,7 +23,7 @@ from openpyxl import load_workbook
 
 # Q&A LOGGING FUNCTION
 def log_chat_local(user_question, assistant_answer, response_time, model, words, chunk_params, query_params,
-                   search_time, rerank_time):
+                   search_time):
     file_path = r'C:\Users\Jeff\Dropbox\Jeff DropBox\Cloud Assurance\LLM Projects\Streamlit experiments\MDDR Streamlit\chat_log.xlsx'
     timezone = pytz.timezone("America/Los_Angeles")  # Pacific Time Zone
     current_time = datetime.now(timezone).strftime("%Y-%m-%d %H:%M:%S")
@@ -38,8 +38,7 @@ def log_chat_local(user_question, assistant_answer, response_time, model, words,
         words,
         str(chunk_params),  # Ensure complex objects are converted to string
         str(query_params),   # Ensure complex objects are converted to string
-        search_time,
-        rerank_time
+        search_time
     ]
 
     # Check if the file exists and is not empty
@@ -261,8 +260,8 @@ if st.session_state.messages[-1]["role"] != "assistant":
             st.write(response.response)
             message = {"role": "assistant", "content": response.response}
             st.session_state.messages.append(message) # Add response to message history
-            words = count_words(response.response)
-            log_chat_local(user_question=prompt,
+            # words = count_words(response.response)
+            # log_chat_local(user_question=prompt,
                                assistant_answer=response.response,
                                response_time=response_time,
                                model=model,
