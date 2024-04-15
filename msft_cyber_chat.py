@@ -179,7 +179,9 @@ if "messages" not in st.session_state.keys(): # Initialize the chat messages his
     st.session_state.messages = [
         {"role": "assistant", "content": """Ask a question and tell the chatbot what kind of answer you want: 
          A quick one sentence answer? A detailed explanation? Content for a 10 slide deck with speaker notes?
-         The choice is yours (more ambitious questions may take longer)."""}
+         The choice is yours (more ambitious questions may take longer). Always try to tell the AI as
+         explicitly as possible what kind of answer you expect. If you're not satisfied with its first
+         attempt, try revising your prompt or asking it follow up questions."""}
     ]
 
 
