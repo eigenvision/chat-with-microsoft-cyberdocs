@@ -166,21 +166,36 @@ st.markdown("""
 # Custom title with a line break using HTML in markdown
 st.markdown('<div class="custom-title">Chat with Microsoft<br>Cybersecurity Reports</div>', unsafe_allow_html=True)
 
-st.info("""As the digital domain continues to evolve, defenders around the world are innovating 
-    and collaborating more closely than ever. converse with recent Microsoft cybersecurity publications 
-    including the 2023 Microsoft Digital Defense Report and the Microsoft Security Blog. 
-    Ask the chatbot simple or sophisticated questions or ask it to create Talking Points or even 
-    the content of entire PowerPoint presentations.""")
-st.write("[Download the Microsoft Digital Defense Report](https://www.microsoft.com/en-us/security/security-insider/microsoft-digital-defense-report-2023)")
-         
+st.info("""This chatbot lets you converse with recent Microsoft 
+    cybersecurity publications including the 2023 Microsoft Digital Defense Report and the Microsoft Security Blog
+    from June 2023 through April 2024.
+    Using GPT-4, the chatbot is designed to produce substantive and accurate answers about Microsoft's cybersecurity 
+    research that are suitable for use in customer and stakeholder engagements. Nevertheless you should always review
+    answers carefully before sharing. To get the best quality, always tell the AI exactly what 
+    kind of answer you expect. A quick answer in only one sentence or paragraph? A detailed multi-paragraph 
+    explanation? Talking points for a meeting with regulators? Content for a 10 slide customer presentation with 
+    speaker notes? An answer in French? The choice is yours.
+    Keep in mind that responses to more ambitous questions may take up to a minute.
+    If you're not satisfied with the AI's first attempt, try revising your prompt or asking follow up questions.""")
+# st.write("[Download the Microsoft Digital Defense Report](https://www.microsoft.com/en-us/security/security-insider/microsoft-digital-defense-report-2023)")
+
+# Custom CSS to center text
+st.markdown("""
+<style>
+.centered-text {
+    text-align: center;
+}
+</style>
+""", unsafe_allow_html=True)
+
+# Text with hyperlink centered
+st.markdown('<p class="centered-text">Download the <a href="https://www.microsoft.com/en-us/security/security-insider/microsoft-digital-defense-report-2023" target="_blank">Microsoft Digital Defense Report</a></p>', unsafe_allow_html=True)
+
+
 if "messages" not in st.session_state.keys(): # Initialize the chat messages history
     st.session_state.messages = [
         {"role": "assistant", "content": """Ask a question and tell the chatbot what kind of answer you want: 
-         A quick answer in only one sentence or paragraph? A detailed multi-paragraph explanation? 
-         Content for a 10 slide deck with speaker notes?
-         The choice is yours (more ambitious questions may take longer). Always try to tell the AI
-         exactly what kind of answer you expect. If you're not satisfied with its first
-         attempt, try revising your prompt or asking follow up questions."""}
+         """}
     ]
 
 
