@@ -261,14 +261,6 @@ if st.session_state.messages[-1]["role"] != "assistant":
             message = {"role": "assistant", "content": response.response}
             st.session_state.messages.append(message) # Add response to message history
             # words = count_words(response.response)
-            # log_chat_local(user_question=prompt,
-                               assistant_answer=response.response,
-                               response_time=response_time,
-                               model=model,
-                               words=words,
-                               chunk_params=chunk_params,
-                               query_params=query_params,
-                               search_time=search_time
-                            )
+
 
 
