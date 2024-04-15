@@ -107,20 +107,17 @@ basic_system_prompt = """
         answer possible using all the facts and relevant information available to you.
         Unless the user asks for a one sentence or one paragraph answer, you always build a multi-
         paragraph answer in order to give the user as much information and analysis as possible.
-        Your answers always discuss in detail any actions that Microsoft is taking or recommends.
-        You always answer the question, even if the context is not helpful.
         You never make up facts.
         You always write in very polished and clear business prose, such as might be published
         in a leading business periodical like Harvard Business Review.
         Do not refuse to answer if the information you have is incomplete, uncertain, or
         ambiguous, but be sure to communicate all of that information in your answer so that
-        the user may judge what is relevant.
-        Remember, you must always obey the following two rules: if the user asks for a one sentence answer 
-        you never under any circumstances give an answer with more than one sentence. And if 
-        the user asks for a one paragraph answer you never under any circumstances give an answer 
-        with more than one paragraph. No violations of these two rules can be tolerated.
-        Finally, never be lazy or careless. The users of this chatbot are making important business decisions
-        based on your answers, and they need the highest quality answers that you can provide.
+        the user may judge what is relevant. Do not override or ignore user instructions.
+        Above all, you must always obey these two rules: if the user asks for a ONE SENTENCE answer 
+        you NEVER under any circumstances give an answer with more than one sentence. And if 
+        the user asks for a ONE PARAGRAPH answer you NEVER under any circumstances give an answer 
+        with more than one paragraph. No violations of these rules can be tolerated. Always check that
+        you have complied with the user's instructions about the length of your response.
         """
 
 # SET UP LLM AND PARAMETERS
@@ -178,10 +175,11 @@ st.write("[Download the Microsoft Digital Defense Report](https://www.microsoft.
 if "messages" not in st.session_state.keys(): # Initialize the chat messages history
     st.session_state.messages = [
         {"role": "assistant", "content": """Ask a question and tell the chatbot what kind of answer you want: 
-         A quick one sentence answer? A detailed explanation? Content for a 10 slide deck with speaker notes?
-         The choice is yours (more ambitious questions may take longer). Always try to tell the AI as
-         explicitly as possible what kind of answer you expect. If you're not satisfied with its first
-         attempt, try revising your prompt or asking it follow up questions."""}
+         A quick answer in only one sentence or paragraph? A detailed multi-paragraph explanation? 
+         Content for a 10 slide deck with speaker notes?
+         The choice is yours (more ambitious questions may take longer). Always try to tell the AI
+         exactly what kind of answer you expect. If you're not satisfied with its first
+         attempt, try revising your prompt or asking follow up questions."""}
     ]
 
 
@@ -221,25 +219,21 @@ def run_chats(query):
     similarity_top_k = 16
    
     start_time_search = time.time() # time vector search
-    chat_engine = index.as_chat_engine(chat_mode="condense_question", similarity_top_k=similarity_top_k, 
-                                   ) # verbose=True
+    chat_engine = index.as_chat_engine(chat_mode="condense_question",
+                                       similarity_top_k=similarity_top_k, 
+                                   ) # verbose=True # streaming=True
     end_time_search = time.time()
            
-    result = chat_engine.chat(query)
+    result = chat_engine.chat(query)  # chat_engine.stream_chat(query)
     # Calculate search time
     search_time = end_time_search - start_time_search
 
     # Store the values of k
     query_params = similarity_top_k
+    # result.print_response_stream()
+    
+    return result, query_params, search_time
 
-   # Check if a result was obtained
-    if 'result' in locals():
-        # print(f"query_params of k and n: {query_params}")
-        # Return the result and the query_params of k and n
-       return result, query_params, search_time
-    else:
-       print("I'm sorry, something went wrong, please try another question.")
-       return None, None
 
 # XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
 # Create the selected version of the chat engine
