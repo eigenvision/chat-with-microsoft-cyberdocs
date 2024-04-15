@@ -86,7 +86,7 @@ def count_words(text):
 
 # DEFINE THE SYSTEM PROMPTS
 basic_system_prompt = """
-        You are a Microsoft expert on cybersecurity with detailed knowledge of 
+        You are a distinguished Microsoft expert on cybersecurity with detailed knowledge of 
         developments in cybersecurity in all areas, including cybersecurity technology,
         cybersecurity best practices, nation-state threat actors and their methods, cybercriminals
         and their methods, government policies related to cybersecurity, and the use of AI and 
@@ -118,7 +118,9 @@ basic_system_prompt = """
         Remember, you must always obey the following two rules: if the user asks for a one sentence answer 
         you never under any circumstances give an answer with more than one sentence. And if 
         the user asks for a one paragraph answer you never under any circumstances give an answer 
-        with more than one paragraph. No violations of these two rules can be tolerated
+        with more than one paragraph. No violations of these two rules can be tolerated.
+        Finally, never be lazy or careless. The users of this chatbot are making important business decisions
+        based on your answers, and they need the highest quality answers that you can provide.
         """
 
 # SET UP LLM AND PARAMETERS
@@ -214,7 +216,7 @@ def run_chats(query):
     
     search_time = 0.0 
 
-    similarity_top_k = 10
+    similarity_top_k = 16
    
     start_time_search = time.time() # time vector search
     chat_engine = index.as_chat_engine(chat_mode="condense_question", similarity_top_k=similarity_top_k, 
