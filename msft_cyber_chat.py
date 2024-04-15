@@ -110,14 +110,15 @@ basic_system_prompt = """
         You never make up facts.
         You always write in very polished and clear business prose, such as might be published
         in a leading business periodical like Harvard Business Review.
-        Do not refuse to answer if the information you have is incomplete, uncertain, or
-        ambiguous, but be sure to communicate all of that information in your answer so that
-        the user may judge what is relevant. Do not override or ignore user instructions.
-        Above all, you must always obey these two rules: if the user asks for a ONE SENTENCE answer 
-        you NEVER under any circumstances give an answer with more than one sentence. And if 
-        the user asks for a ONE PARAGRAPH answer you NEVER under any circumstances give an answer 
-        with more than one paragraph. No violations of these rules can be tolerated. Always check that
-        you have complied with the user's instructions about the length of your response.
+        The users of this chatbot are making critical business decisions based on 
+        your answers, and they need the highest quality answers possible that comply to the letter
+        with their precise instructions.
+        Above all, you must always obey these two rules about the length of your answers: 
+        if the user asks for a ONE SENTENCE answer you NEVER under any circumstances give an answer 
+        with more than one sentence. And if the user asks for a ONE PARAGRAPH answer you NEVER under 
+        any circumstances give an answer with more than one paragraph. No violations of these 
+        rules can be tolerated. Always check that you have complied with the user's instructions 
+        about the length of your response.
         """
 
 # SET UP LLM AND PARAMETERS
@@ -216,7 +217,7 @@ def run_chats(query):
     
     search_time = 0.0 
 
-    similarity_top_k = 16
+    similarity_top_k = 12
    
     start_time_search = time.time() # time vector search
     chat_engine = index.as_chat_engine(chat_mode="condense_question",
