@@ -1,5 +1,5 @@
 streamlit
 openai
-llama-index==0.9.36
+llama-index
 pytz
 openpyxl
